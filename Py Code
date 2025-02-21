@@ -1,0 +1,45 @@
+# Brightness Control System
+
+# Constants for brightness limits
+MIN_BRIGHTNESS = 10  # Minimum brightness limit (percentage)
+MAX_BRIGHTNESS = 100  # Maximum brightness limit (percentage)
+STEP_SIZE = 5  # Step size for brightness adjustment
+
+# Initial brightness level
+brightness = MIN_BRIGHTNESS
+
+print("Brightness Control System")
+print(f"Adjust brightness using '+' and '-'. Type 'exit' to quit.\n")
+
+while True:
+    # Display brightness visually
+    bar_length = 20  # Fixed length for visualization
+    filled_blocks = int((brightness / MAX_BRIGHTNESS) * bar_length)
+    bar = "|" * filled_blocks + "-" * (bar_length - filled_blocks)
+    print(f"[{bar}] {brightness}%")
+
+    # Take user input
+    command = input("Enter command: ").strip().lower()
+
+    if command == "exit":
+        print("Exiting brightness control. Goodbye!")
+        break  # Exit loop
+
+    elif set(command) == {"+"}:  # If input consists only of '+'
+        change = STEP_SIZE * len(command)
+        if brightness + change > MAX_BRIGHTNESS:
+            print(f"Brightness cannot exceed {MAX_BRIGHTNESS}%.")
+        else:
+            brightness += change
+
+    elif set(command) == {"-"}:  # If input consists only of '-'
+        change = STEP_SIZE * len(command)
+        if brightness - change < MIN_BRIGHTNESS:
+            print(f"Brightness cannot go below {MIN_BRIGHTNESS}%.")
+        else:
+            brightness -= change
+
+    else:
+        print("Invalid input. Use only '+' or '-' repeated multiple times, or type 'exit' to quit.")
+
+    print("\n" + "-" * 30)  # Separator for better readability
